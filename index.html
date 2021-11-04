@@ -18,10 +18,20 @@
         var bees;
         var updateTimer;
         var lastStringTime;
-
+        
     </script>  
-    
-    
+    <script type="text/javascript">
+        function formReset()
+          {
+          document.getElementById("myForm").reset()
+          }
+        </script>
+    <form id="myForm">
+        Name: <input type="text" size="20"><br />
+        Age: <input type="text" size="20"><br />
+        <br />
+        <input type="button" onclick="formReset()" value="Reset">
+        </form>
      <body onload="start();">
         <div id="title">
             <h1>Help the bear escape the bees !</h1>
