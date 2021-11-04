@@ -30,13 +30,6 @@ function Bear() {
     if (this.y > h - ih) this.y = h - ih;
   };
 }
-function start() {
-  //create bear
-  bear = new Bear();
-  document.addEventListener("keydown", moveBear, false);
-  bees = new Array();
-  makeBees();
-}
 function moveBear(e) {
   //codes of the four keys
   const KEYUP = 38;
@@ -44,17 +37,24 @@ function moveBear(e) {
   const KEYLEFT = 37;
   const KEYRIGHT = 39;
   if (e.keyCode === KEYRIGHT) {
-    Bear.move(1, 0);
+    bear.move(1, 0);
   } // right key
   if (e.keyCode === KEYLEFT) {
-    Bear.move(-1, 0);
+    bear.move(-1, 0);
   } // left key
   if (e.keyCode === KEYUP) {
-    Bear.move(0, -1);
+    bear.move(0, -1);
   } // up key
   if (e.keyCode === KEYDOWN) {
-    Bear.move(0, 1);
+    bear.move(0, 1);
   } // down key
+}
+
+function start() {
+  bear = new Bear();
+  document.addEventListener("keydown", moveBear, false);
+  bees = new Array();
+  makeBees();
 }
 
 class Bee {
@@ -130,12 +130,31 @@ function makeBees() {
     window.alert("Invalid number of bees");
     return;
   }
+  //create bees
   let i = 1;
   while (i <= nbBees) {
     var num = i;
-    var bee = new Bee(num);
-    bee.display();
-    bee.push(bee);
+    var bee = new Bee(num); //create object and its IMG element
+    bee.display(); //display the bee
+    bees.push(bee); //add the bee object to the bees array
     i++;
   }
+}
+function moveBees() {
+  let speed = document.getElementById("speedBees").value;
+  //move each bee to a random location
+  for (let i = 0; i < bees.length; i++) {
+    let dx = getRandomInt(2 * speed) - speed;
+    let dy = getRandomInt(2 * speed) - speed;
+    bees[i].move(dx, dy);
+  }
+}
+function updateBees() {
+  // update loop for game
+  //move the bees randomly
+  moveBees();
+  //use a fixed update period
+  let period = 10; //modify this to control refresh period
+  //update the timer for the next move
+  updateTimer = setTimeout("updateBees()", period);
 }
